@@ -191,23 +191,21 @@ public class BoardGameModel : MonoBehaviour
 
         for (int i = i_LastColumnMoveInput + 1; i <= i_LastColumnMoveInput + 3; i++)
         {
-            if (i < m_Board.GetLength(1))
-            {
-                SpriteRenderer gamePieceSpriteRenderer = m_Board[i_LastRowMoveInput, i].GetComponent<SpriteRenderer>();
+            SpriteRenderer gamePieceSpriteRenderer = null;
 
-                if (gamePieceSpriteRenderer.color != Color.white && gamePieceSpriteRenderer.color == i_GamePieceColor)
-                {
-                    neighborsCounter++;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            else
+            if (i >= m_Board.GetLength(1))
             {
                 break;
             }
+
+            gamePieceSpriteRenderer = m_Board[i_LastRowMoveInput, i].GetComponent<SpriteRenderer>();
+
+            if (gamePieceSpriteRenderer.color == Color.white || gamePieceSpriteRenderer.color != i_GamePieceColor)
+            {
+                break;
+            }
+
+            neighborsCounter++;
 
             if (neighborsCounter == 4)
             {
@@ -218,23 +216,21 @@ public class BoardGameModel : MonoBehaviour
 
         for (int i = i_LastColumnMoveInput - 1; i >= i_LastColumnMoveInput - 3; i--)
         {
-            if (i >= 0)
-            {
-                SpriteRenderer gamePieceSpriteRenderer = m_Board[i_LastRowMoveInput, i].GetComponent<SpriteRenderer>();
+            SpriteRenderer gamePieceSpriteRenderer = null;
 
-                if (gamePieceSpriteRenderer.color != Color.white && gamePieceSpriteRenderer.color == i_GamePieceColor)
-                {
-                    neighborsCounter++;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            else
+            if (i < 0)
             {
                 break;
             }
+
+            gamePieceSpriteRenderer = m_Board[i_LastRowMoveInput, i].GetComponent<SpriteRenderer>();
+
+            if (gamePieceSpriteRenderer.color == Color.white || gamePieceSpriteRenderer.color != i_GamePieceColor)
+            {
+                break;
+            }
+
+            neighborsCounter++;
 
             if (neighborsCounter == 4)
             {
@@ -253,23 +249,21 @@ public class BoardGameModel : MonoBehaviour
 
         for (int i = i_LastRowMoveInput + 1; i <= i_LastRowMoveInput + 3; i++)
         {
-            if (i < m_Board.GetLength(0))
-            {
-                SpriteRenderer gamePieceSpriteRenderer = m_Board[i, i_LastColumnMoveInput].GetComponent<SpriteRenderer>();
+            SpriteRenderer gamePieceSpriteRenderer = null;
 
-                if (gamePieceSpriteRenderer.color != Color.white && gamePieceSpriteRenderer.color == i_GamePieceColor)
-                {
-                    neighborsCounter++;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            else
+            if (i >= m_Board.GetLength(0))
             {
                 break;
             }
+
+            gamePieceSpriteRenderer = m_Board[i, i_LastColumnMoveInput].GetComponent<SpriteRenderer>();
+
+            if (gamePieceSpriteRenderer.color == Color.white || gamePieceSpriteRenderer.color != i_GamePieceColor)
+            {
+                break;
+            }
+
+            neighborsCounter++;
 
             if (neighborsCounter == 4)
             {
@@ -280,23 +274,21 @@ public class BoardGameModel : MonoBehaviour
 
         for (int i = i_LastRowMoveInput - 1; i >= i_LastRowMoveInput - 3; i--)
         {
-            if (i >= 0)
-            {
-                SpriteRenderer gamePieceSpriteRenderer = m_Board[i, i_LastColumnMoveInput].GetComponent<SpriteRenderer>();
+            SpriteRenderer gamePieceSpriteRenderer = null;
 
-                if (gamePieceSpriteRenderer.color != Color.white && gamePieceSpriteRenderer.color == i_GamePieceColor)
-                {
-                    neighborsCounter++;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            else
+            if (i < 0)
             {
                 break;
             }
+
+            gamePieceSpriteRenderer = m_Board[i, i_LastColumnMoveInput].GetComponent<SpriteRenderer>();
+
+            if (gamePieceSpriteRenderer.color == Color.white || gamePieceSpriteRenderer.color != i_GamePieceColor)
+            {
+                break;
+            }
+
+            neighborsCounter++;
 
             if (neighborsCounter == 4)
             {
@@ -317,23 +309,21 @@ public class BoardGameModel : MonoBehaviour
 
         for (i = i_LastRowMoveInput - 1, j = i_LastColumnMoveInput + 1; i >= i_LastRowMoveInput - 3 && j <= i_LastColumnMoveInput + 3; i--, j++)
         {
-            if (i >= 0 && j < m_Board.GetLength(1))
-            {
-                SpriteRenderer gamePieceSpriteRenderer = m_Board[i, j].GetComponent<SpriteRenderer>();
+            SpriteRenderer gamePieceSpriteRenderer = null;
 
-                if (gamePieceSpriteRenderer.color != Color.white && gamePieceSpriteRenderer.color == i_GamePieceColor)
-                {
-                    neighborsCounter++;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            else
+            if (i < 0 || j >= m_Board.GetLength(1))
             {
                 break;
             }
+
+            gamePieceSpriteRenderer = m_Board[i, j].GetComponent<SpriteRenderer>();
+
+            if (gamePieceSpriteRenderer.color == Color.white || gamePieceSpriteRenderer.color != i_GamePieceColor)
+            {
+                break;
+            }
+
+            neighborsCounter++;
 
             if (neighborsCounter == 4)
             {
@@ -344,23 +334,21 @@ public class BoardGameModel : MonoBehaviour
 
         for (i = i_LastRowMoveInput + 1, j = i_LastColumnMoveInput - 1; i <= i_LastRowMoveInput + 3 && j >= i_LastColumnMoveInput - 3; i++, j--)
         {
-            if (i < m_Board.GetLength(0) && j >= 0)
-            {
-                SpriteRenderer gamePieceSpriteRenderer = m_Board[i, j].GetComponent<SpriteRenderer>();
+            SpriteRenderer gamePieceSpriteRenderer = null;
 
-                if (gamePieceSpriteRenderer.color != Color.white && gamePieceSpriteRenderer.color == i_GamePieceColor)
-                {
-                    neighborsCounter++;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            else
+            if (i >= m_Board.GetLength(0) || j < 0)
             {
                 break;
             }
+
+            gamePieceSpriteRenderer = m_Board[i, j].GetComponent<SpriteRenderer>();
+
+            if (gamePieceSpriteRenderer.color == Color.white || gamePieceSpriteRenderer.color != i_GamePieceColor)
+            {
+                break;
+            }
+
+            neighborsCounter++;
 
             if (neighborsCounter == 4)
             {
@@ -381,23 +369,21 @@ public class BoardGameModel : MonoBehaviour
 
         for (i = i_LastRowMoveInput - 1, j = i_LastColumnMoveInput - 1; i >= i_LastRowMoveInput - 3 && j >= i_LastColumnMoveInput - 3; i--, j--)
         {
-            if (i >= 0 && j >= 0)
-            {
-                SpriteRenderer gamePieceSpriteRenderer = m_Board[i, j].GetComponent<SpriteRenderer>();
+            SpriteRenderer gamePieceSpriteRenderer = null;
 
-                if (gamePieceSpriteRenderer.color != Color.white && gamePieceSpriteRenderer.color == i_GamePieceColor)
-                {
-                    neighborsCounter++;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            else
+            if (i < 0 || j < 0)
             {
                 break;
             }
+
+            gamePieceSpriteRenderer = m_Board[i, j].GetComponent<SpriteRenderer>();
+
+            if (gamePieceSpriteRenderer.color == Color.white || gamePieceSpriteRenderer.color != i_GamePieceColor)
+            {
+                break;
+            }
+
+            neighborsCounter++;
 
             if (neighborsCounter == 4)
             {
@@ -408,23 +394,21 @@ public class BoardGameModel : MonoBehaviour
 
         for (i = i_LastRowMoveInput + 1, j = i_LastColumnMoveInput + 1; i <= i_LastRowMoveInput + 3 && j <= i_LastColumnMoveInput + 3; i++, j++)
         {
-            if (i < m_Board.GetLength(0) && j < m_Board.GetLength(1))
-            {
-                SpriteRenderer gamePieceSpriteRenderer = m_Board[i, j].GetComponent<SpriteRenderer>();
+            SpriteRenderer gamePieceSpriteRenderer = null;
 
-                if (gamePieceSpriteRenderer.color != Color.white && gamePieceSpriteRenderer.color == i_GamePieceColor)
-                {
-                    neighborsCounter++;
-                }
-                else
-                {
-                    break;
-                }
-            }
-            else
+            if (i >= m_Board.GetLength(0) || j >= m_Board.GetLength(1))
             {
                 break;
             }
+
+            gamePieceSpriteRenderer = m_Board[i, j].GetComponent<SpriteRenderer>();
+
+            if (gamePieceSpriteRenderer.color == Color.white || gamePieceSpriteRenderer.color != i_GamePieceColor)
+            {
+                break;
+            }
+
+            neighborsCounter++;
 
             if (neighborsCounter == 4)
             {
