@@ -12,7 +12,7 @@ public class BoardGameModel : MonoBehaviour
     private GameObject[,] m_Board = null;
     private BoxCollider2D[] m_ColumnColliders = null;
 
-    internal void Initialize(int i_RowLength, int i_ColumnLength)
+    public void Initialize(int i_RowLength, int i_ColumnLength)
     {
         GameObject gamePiecesGroup = new GameObject("Game Pieces");
         GameObject gameCollidersGroup = new GameObject("Column Colliders");
@@ -65,7 +65,7 @@ public class BoardGameModel : MonoBehaviour
         }
     }
 
-    internal void Show()
+    public void Show()
     {
         foreach (GameObject gamePiece in m_Board)
         {

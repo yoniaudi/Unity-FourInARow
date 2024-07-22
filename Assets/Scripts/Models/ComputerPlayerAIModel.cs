@@ -15,6 +15,11 @@ public class ComputerPlayerAIModel : MonoBehaviour
         m_Board = i_BoardGame.GetBoardGame();
     }*/
 
+    private void Start()
+    {
+        Board = FindObjectOfType<BoardGameModel>().GetBoardGame();
+    }
+
     public int GetBestMove()
     {
         int bestMove = -1;
