@@ -7,16 +7,6 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private List<Button> m_MainMenuButtons = null;
 
-    public void btnStartGame_click()
-    {
-        //initializeGameMode("Multiplayer");
-    }
-
-    public void btnOptions_click()
-    {
-        //initializeGameMode("Multiplayer");
-    }
-
     public void btnExitGame_click()
     {
         Application.Quit();
