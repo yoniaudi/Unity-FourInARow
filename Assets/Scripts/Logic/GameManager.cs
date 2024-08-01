@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ScoreHandlerModel m_ScoreHandler = null;
     [SerializeField] private BoardGameModel m_BoardGamePrefab = null;
     [SerializeField] private TextMeshProUGUI m_ScoreText = null;
-    public static GameManager m_Instance;
+    public static GameManager s_Instance = null;
     public bool IsGameRunning { get; private set; } = false;
     public int BoardMinLength { get; } = 4;
     public int BoardMaxLength { get; } = 8;
@@ -29,9 +29,9 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (m_Instance == null)
+        if (s_Instance == null)
         {
-            m_Instance = this;
+            s_Instance = this;
         }
         else
         {

@@ -11,7 +11,7 @@ public class CanvasManager : MonoBehaviour
 
     void Start()
     {
-        GameManager.m_Instance.ShowPlayAgainCanvas += playAnotherRound_Action;
+        GameManager.s_Instance.ShowPlayAgainCanvas += playAnotherRound_Action;
         changeState(eUIState.MainMenu);
     }
 

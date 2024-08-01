@@ -116,7 +116,7 @@ public class BoardGameModel : MonoBehaviour
 
                 if (gamePieceSpriteRenderer.color == Color.white)
                 {
-                    gamePieceSpriteRenderer.color = m_GamePieceColors[(int)GameManager.m_Instance.m_TurnState];
+                    gamePieceSpriteRenderer.color = m_GamePieceColors[(int)GameManager.s_Instance.m_TurnState];
                     o_PlayerRowInsertPosition = i;
                     isNextMoveInserted = true;
                     break;

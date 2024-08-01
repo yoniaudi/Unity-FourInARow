@@ -2,18 +2,16 @@ using UnityEngine;
 
 public class ComputerPlayerAIModel : MonoBehaviour
 {
-    [SerializeField] private Color m_WhiteGamePiece = Color.white;
-    [SerializeField] private Color m_RedGamePiece = Color.red;
-    [SerializeField] private Color m_GreenGamePiece = Color.green;
+    [SerializeField] private Color m_WhiteGamePieceColor = Color.white;
+    [SerializeField] private Color m_RedGamePieceColor = Color.red;
+    [SerializeField] private Color m_GreenGamePieceColor = Color.green;
+    [SerializeField] private GameObject m_WhiteGamePiece;
+    [SerializeField] private GameObject m_RedGamePiece;
+    [SerializeField] private GameObject m_GreenGamePiece;
     public const string k_Name = "Computer AI";
     public int RowMoveInput { get; set; } = 0;
     public int ColumnMoveInput { get; set; } = 0;
     public GameObject[,] Board { get; set; } = null;
-
-    /*public ComputerPlayerAIModel(BoardGameModel i_BoardGame)
-    {
-        m_Board = i_BoardGame.GetBoardGame();
-    }*/
 
     private void Start()
     {
@@ -24,22 +22,20 @@ public class ComputerPlayerAIModel : MonoBehaviour
     {
         int bestMove = -1;
         int bestScore = int.MinValue;
+        int row = 0;
+        int score = 0;
 
         for (int column = 0; column < Board.GetLength(1); column++)
         {
-            int row = 0;
-            int score = 0;
-            SpriteRenderer gamePieceSpriteRenderer = Board[row, column].GetComponent<SpriteRenderer>();
-
             if (isColumnFull(column))
             {
                 continue;
             }
 
             row = getEmptyRow(column);
-            gamePieceSpriteRenderer.color = m_GreenGamePiece;
-            score = evaluateBoard(m_GreenGamePiece);
-            gamePieceSpriteRenderer.color = m_WhiteGamePiece;
+            Board[row, column].GetComponent<SpriteRenderer>().color = m_RedGamePieceColor;
+            score = evaluateBoard(m_RedGamePieceColor);
+            Board[row, column].GetComponent<SpriteRenderer>().color = m_WhiteGamePieceColor;
 
             if (score > bestScore)
             {
@@ -55,33 +51,32 @@ public class ComputerPlayerAIModel : MonoBehaviour
 
     private bool isColumnFull(int i_Column)
     {
-        return Board[0, i_Column].GetComponent<SpriteRenderer>().color != m_WhiteGamePiece;
+        return Board[0, i_Column].GetComponent<SpriteRenderer>().color != m_WhiteGamePieceColor;
     }
 
     private int getEmptyRow(int i_Column)
     {
-        int row = -1;
+        int emptyRowIndex = -1;
 
         for (int i = Board.GetLength(0) - 1; i >= 0; i--)
         {
-            if (Board[i, i_Column].GetComponent<SpriteRenderer>().color == m_WhiteGamePiece)
+            if (Board[i, i_Column].GetComponent<SpriteRenderer>().color == m_WhiteGamePieceColor)
             {
-                row = i;
+                emptyRowIndex = i;
                 break;
             }
         }
 
-        return row;
+        return emptyRowIndex;
     }
 
     private int evaluateBoard(Color i_ComputerPlayerGamePiece)
     {
-        Color opponentGamePiece = m_RedGamePiece;
+        Color opponentGamePiece = m_GreenGamePieceColor;
         int score = 0;
-        bool isOpponentTurn = true;
 
-        score += evaluatePotentialWins(i_ComputerPlayerGamePiece, !isOpponentTurn);
-        score -= evaluatePotentialWins(opponentGamePiece, isOpponentTurn);
+        score += evaluatePotentialWins(i_ComputerPlayerGamePiece, false);
+        score -= evaluatePotentialWins(opponentGamePiece, true);
 
         return score;
     }
@@ -90,13 +85,10 @@ public class ComputerPlayerAIModel : MonoBehaviour
     {
         int score = 0;
 
-        score += evaluateDirection(i_Player, 0, 1, i_IsOpponent);
-        score += evaluateDirection(i_Player, 0, -1, i_IsOpponent);
         score += evaluateDirection(i_Player, 1, 0, i_IsOpponent);
+        score += evaluateDirection(i_Player, 0, 1, i_IsOpponent);
         score += evaluateDirection(i_Player, 1, 1, i_IsOpponent);
-        score += evaluateDirection(i_Player, -1, -1, i_IsOpponent);
         score += evaluateDirection(i_Player, 1, -1, i_IsOpponent);
-        score += evaluateDirection(i_Player, -1, 1, i_IsOpponent);
 
         return score;
     }
@@ -123,7 +115,7 @@ public class ComputerPlayerAIModel : MonoBehaviour
                         {
                             count++;
                         }
-                        else if (Board[newRow, newCol] == null)
+                        else if (Board[newRow, newCol].GetComponent<SpriteRenderer>().color == m_WhiteGamePieceColor)
                         {
                             emptyCount++;
                         }
@@ -142,14 +134,7 @@ public class ComputerPlayerAIModel : MonoBehaviour
                     }
                 }
 
-                if (i_IsOpponent == false)
-                {
-                    score += countToScore(count, emptyCount);
-                }
-                else
-                {
-                    score += countToScoreForOpponent(count, emptyCount);
-                }
+                score += i_IsOpponent ? countToScoreForOpponent(count, emptyCount) : countToScore(count, emptyCount);
             }
         }
 
@@ -158,53 +143,35 @@ public class ComputerPlayerAIModel : MonoBehaviour
 
     private int countToScore(int i_Count, int i_EmptyCount)
     {
-        int score = 0;
-
         switch (i_Count)
         {
             case 1:
-                score = i_EmptyCount == 3 ? 1 : 0;
-                break;
+                return i_EmptyCount == 3 ? 1 : 0;
             case 2:
-                score = i_EmptyCount == 2 ? 10 : 0;
-                break;
+                return i_EmptyCount == 2 ? 10 : 0;
             case 3:
-                score = i_EmptyCount == 1 ? 100 : 0;
-                break;
+                return i_EmptyCount == 1 ? 100 : 0;
             case 4:
-                score = 500;
-                break;
+                return 500;
             default:
-                score = 0;
-                break;
+                return 0;
         }
-
-        return score;
     }
 
     private int countToScoreForOpponent(int i_Count, int i_EmptyCount)
     {
-        int score = 0;
-
         switch (i_Count)
         {
             case 1:
-                score = i_EmptyCount == 3 ? 1 : 0;
-                break;
+                return i_EmptyCount == 3 ? 1 : 0;
             case 2:
-                score = i_EmptyCount == 2 ? 10 : 0;
-                break;
+                return i_EmptyCount == 2 ? 10 : 0;
             case 3:
-                score = i_EmptyCount == 1 ? 500 : 0;
-                break;
+                return i_EmptyCount == 1 ? 500 : 0;
             case 4:
-                score = 1000;
-                break;
+                return 1000;
             default:
-                score = 0;
-                break;
+                return 0;
         }
-
-        return score;
     }
 }

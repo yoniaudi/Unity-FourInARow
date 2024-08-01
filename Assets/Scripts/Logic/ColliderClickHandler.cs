@@ -13,7 +13,7 @@ public class ColliderClickHandler : MonoBehaviour
         string colliderIndx = new string(gameObject.name.Where(char.IsDigit).ToArray());
 
         //Debug.Log($"{colliderIndx} have been clicked");
-        GameManager.m_Instance.PlayTurn(m_ChosenIndex);
+        GameManager.s_Instance.PlayTurn(m_ChosenIndex);
     }
 
     private void Awake()
